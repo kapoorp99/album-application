@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import Home from "./components/Home";
+import SearchBar from "./components/SearchBar";
+import { useStyles } from "./globalStyles";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAlbums } from './redux/reducers/albums'
+import { fetchPhotos } from './redux/reducers/photos'
 
 function App() {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  let { albums, photos } = useSelector(state => state)
+  useEffect(() => {
+    dispatch(fetchAlbums())
+    dispatch(fetchPhotos())
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.app}>
+      {albums.loading && photos.loading ? ("Loading") :
+        (
+          <Home albums={albums.albums.slice(0, 5)} photos={photos.photos} />
+        )}
     </div>
   );
 }
