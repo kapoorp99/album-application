@@ -1,6 +1,6 @@
+/* eslint-disable */
 import { useEffect } from "react";
 import Home from "./components/Home";
-import SearchBar from "./components/SearchBar";
 import { useStyles } from "./globalStyles";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAlbums } from './redux/reducers/albums'
@@ -16,7 +16,7 @@ function App() {
   }, [])
   return (
     <div className={classes.app}>
-      {albums.loading && photos.loading ? ("Loading") :
+      {albums.loading && photos.loading ? ("Loading...") :
         (
           <Home albums={albums.albums.slice(0, 5)} photos={photos.photos} />
         )}
